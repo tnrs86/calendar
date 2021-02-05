@@ -20,8 +20,12 @@ export default class Calendar__plate extends Component<myProps> {
     super(props);
 
   }
-  render() {
 
+  extStartRender() {
+    
+    this.forceUpdate();
+  }
+  render() {
     return (
       <div className='calendar__plate'>
         <div className='calendar__header'>
@@ -31,7 +35,20 @@ export default class Calendar__plate extends Component<myProps> {
         </div>
         <div className='calendar__main'>
           <Calendar__weekDayS />
-          <Calendar__days  days={this.props.days} clickHandler={this.props.dayClickHandler}/>
+          <div className='calendar__days-wrapper'>
+            {this.props.days.map((day, i) => {
+              return (
+                <Calendar__days key={i} day={day} position={i} clickHandler={
+                  ()=> {
+                    this.extStartRender();
+                    this.props.dayClickHandler(i);
+                  }
+                  
+                }/>
+              )
+            })}
+          </div>
+          {/* <Calendar__days  days={this.props.days} clickHandler={this.props.dayClickHandler}/> */}
         </div>
         <div className='calendar__footer'>
           <TextButton label='очистить' clickHandler={this.props.buttonClickHandler}/>

@@ -3,15 +3,17 @@ import "./calendar__days.scss";
 
 
 type myProps = {
-  days: number[];
-  clickHandler: Function
+  day: number;
+  position: number;
+  clickHandler: Function;
+  // condition: string;
 }
 
 type myState = {
   class: string
 }
 
-export default class Calendar__days extends Component<myProps> {
+export default class Calendar__day extends Component<myProps> {
   state: myState
   constructor(props: myProps) {
     super(props)
@@ -23,25 +25,29 @@ export default class Calendar__days extends Component<myProps> {
   // componentDidMount() {
   //   console.log('calendar_days отрисован')
   // }
-  
+  componentWillReceiveProps() {
+    this.setState({class: 'off'});
+  }
+
   render() {
 
     return (      
-      <div className={"calendar__days-wrapper"} >
-        {this.props.days.map((day, i)=> {
-          return (
-            <div className={'calendar__day calendar__day_' + this.state.class} key={i+'d'} onClick={()=> { 
-              let className = (this.state.class == 'off') ? 'on' : 'off';
-              this.setState({class: className})
-              this.props.clickHandler(i);
+
+            <div className={'calendar__day calendar__day_' + this.state.class} key={this.props.position+'d'} 
+              onClick={()=> { 
+                this.props.clickHandler(this.props.position);
+                let className = (this.state.class == 'off') ? 'on' : 'off';
+                setTimeout(()=> {
+                  this.setState({class: className})
+
+                }, 20)
 
               }}>
-              {day}
+              
+              {this.props.day}
               
             </div>
-          )
-        })}   
-      </div>
+
     )
   }
 }
