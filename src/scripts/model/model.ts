@@ -3,7 +3,6 @@ class Model {
   currentMonth: Date;
   currentData: Date | dateRange;
   
-  //selectType: DateSelector
   constructor(public selectType: DateSelector, public dayCount: number, startDate?: Date) {
     if (!startDate) startDate = new Date();
     
@@ -67,6 +66,10 @@ class Model {
 
   getCurrentMonth() {
     return this.currentMonth;
+  }
+
+  getSelectType(): DateSelector {
+    return this.selectType
   }
 
 }

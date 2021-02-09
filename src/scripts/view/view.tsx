@@ -1,39 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import "./calendar.scss";
+import Calendar__day from "./calendar__days/calendar__day";
+import Calendar__weekDayS from "./calendar__week-day/calendar__week-day";
+import ArrowButton from "./arrowButton/arrowButton";
+import TextButton from "./textButton/textButton";
+import Calendar__dateLabel from "./calendar__date-label/calendar__date-label";
 
-import Calendar__plate from './calendar__plate/Calendar__plate';
+type viewState = {
+  days?: number[],
+  selectDay?: number,
+  selectRange?: {start: number, end: number},
+  monthListIsOpen?: boolean,
+  selectType?: DateSelector,
+  dateLabelContent? : {month: string, year: string}
+}
 
-class View {
-  rootElement: HTMLElement;
+class View extends Component {
+  state: viewState
   dayClickHandler: Function;
   arrowClickHandler: Function;
   buttonClickHandler: Function;
   dateLabelClickHandler: Function;
   dateLabelListClickhandler: Function;
-  reactElement: React.Component
   
-  constructor(rootElement: HTMLElement) {
-    this.rootElement = rootElement;
-    this.reactElement
-  }
-  
-  render(settings: {days: number[], monthName: string, year: string}, selectDay: number=-1): void {
-    ReactDOM.render(
-      
-      <React.StrictMode>
-        <Calendar__plate days={settings.days} 
-          dateLabelContent={{month: settings.monthName, year: settings.year}}
-          dayClickHandler={this.dayClickHandler}
-          arrowClickHandler={this.arrowClickHandler}
-          selectType={'selectDay'}
-          selectDay={selectDay}
-          dateLabelClickHandler={this.dateLabelClickHandler}
-          dateLabelListClickHandler={this.dateLabelListClickhandler}
-          />
-      </React.StrictMode>,
-      //document.getElementById('root')
-      this.rootElement
-    );
+  constructor(props: {}) {
+    super(props);
+
+
   }
 
   setClickHandler(target: 'day' | 'arrow' | 'button' | 'dateLabel' | 'dateLabelList', handler: Function) {
@@ -55,6 +48,74 @@ class View {
         break;
     }
   }
-}
 
+  stateSetter(settings: viewState) {
+    this.render();
+    console.log('before setState')
+    this.setState(settings);
+    console.log('after set state')
+  }
+
+  setStartSettings() {
+
+  }
+
+  render() {
+    //защита от пустого state
+    if (!this.state) return null
+   
+    return (
+      <div className='calendar'>
+        <div className='calendar__header'>
+          
+          <ArrowButton arrowType='left' clickHandler={this.arrowClickHandler}/>
+          
+          <Calendar__dateLabel 
+            month={this.state.dateLabelContent.month} 
+            year={this.state.dateLabelContent.year} 
+            openDateList={true}
+            handlerLabel={this.dateLabelClickHandler}
+            handlerList={this.dateLabelListClickhandler}
+            />
+          
+          <ArrowButton arrowType='right' clickHandler={this.arrowClickHandler}/>
+        </div>
+        <div className='calendar__main'>
+          
+          <Calendar__weekDayS />
+          
+          <div className='calendar__days-wrapper'>
+            
+            {this.state.days.map((day, i) => {
+              let selected: boolean = false;
+              if (this.state.selectDay == i) selected = true
+              
+              return (
+                <Calendar__day
+                  selected={selected} 
+                  selectType={this.state.selectType} 
+                  key={i} day={day} 
+                  position={i} 
+                  clickHandler={
+                    ()=> {
+                      // this.extStartRender();
+                      this.dayClickHandler(i);
+                    }                    
+                  }/>
+              )
+            })}
+          </div>
+          {/* <Calendar__days  days={this.props.days} clickHandler={this.props.dayClickHandler}/> */}
+        </div>
+       
+        <div className='calendar__footer'>
+          
+          <TextButton label='очистить' clickHandler={this.buttonClickHandler}/>
+          
+          <TextButton label='применить' clickHandler={this.buttonClickHandler}/>
+        </div>
+      </div>
+    )
+  }
+}
 export default View;

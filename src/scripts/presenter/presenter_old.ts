@@ -20,10 +20,10 @@ class Presenter {
       
       let days: number[] = this.model.monthGenerator();
 
-      this.view.render({days: days,
-        monthName: this.getMonthName(),
-        year: this.getYear()
-      }, index)
+      // this.view.render({days: days,
+      //   monthName: this.getMonthName(),
+      //   year: this.getYear()
+      // }, index)
 
     })
 
@@ -37,10 +37,10 @@ class Presenter {
           this.model.setCurrentData(1)
         }
 
-        this.view.render({days: days,
-          monthName: this.getMonthName(),
-          year: this.getYear()
-        })
+        // this.view.render({days: days,
+        //   monthName: this.getMonthName(),
+        //   year: this.getYear()
+        // })
       }
       
     })
@@ -48,10 +48,10 @@ class Presenter {
     this.view.setClickHandler('button', (i: number)=> {
     
       let days: number[] = this.model.monthGenerator();
-      this.view.render({days: days,
-        monthName: this.getMonthName(),
-        year: this.getYear()
-      })
+      // this.view.render({days: days,
+      //   monthName: this.getMonthName(),
+      //   year: this.getYear()
+      // })
     })
 
     this.view.setClickHandler('dateLabel', (value: string)=> {
@@ -60,19 +60,19 @@ class Presenter {
 
     this.view.setClickHandler('dateLabelList', (value: string)=> {
       let days: number[] = this.model.monthGenerator();
-      this.view.render({days: days,
-        monthName: this.getMonthName(),
-        year: this.getYear(),
+      // this.view.render({days: days,
+      //   monthName: this.getMonthName(),
+      //   year: this.getYear(),
         
-      })
+      // })
     })
 
     let days: number[] = this.model.monthGenerator(new Date);
     
-    this.view.render({days: days,
-      monthName: this.getMonthName(),
-      year: this.getYear()
-    });
+    // this.view.render({days: days,
+    //   monthName: this.getMonthName(),
+    //   year: this.getYear()
+    // });
   }
 
   shiftMonth(direction: 'left' | 'right' ): number[] {

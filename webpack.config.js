@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PATHS = path.join(__dirname, '../src');
 
 const prodConfig = {
+  devtool: 'eval',
   mode: 'development',
   entry: './src/scripts/index.tsx',
   output: {

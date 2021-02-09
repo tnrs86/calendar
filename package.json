@@ -1,5 +1,5 @@
 {
-  "name": "cross_zero",
+  "name": "calendar",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -37,5 +37,14 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnrs86/calendar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tnrs86/calendar/issues"
+  },
+  "homepage": "https://github.com/tnrs86/calendar#readme",
+  "description": ""
 }

@@ -6,7 +6,7 @@ import View from "./view/view"
 let myCalendar = function(rootHTML: HTMLElement, selectType: DateSelector, dayCount: number, startDate?: Date) {
   let view = new View(rootHTML);
   let model = new Model(selectType, dayCount, startDate);
-  let presenter = new Presenter(model, view);
+  let presenter = new Presenter(model, view, rootHTML);
   presenter.init();
 }
 
