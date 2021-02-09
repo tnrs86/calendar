@@ -1,5 +1,10 @@
 
-.calendar__date-month, .calendar__date-year {  
+.date-label {
+  position: relative;
+}
+
+
+.date-label__month, .date-label__year {  
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: bold;
@@ -7,4 +12,8 @@
   line-height: 23px;
   text-align: center;
   color: #1F2041;
+}
+
+.date-lable__list {
+  position: absolute;
 }
