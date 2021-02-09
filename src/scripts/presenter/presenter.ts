@@ -13,34 +13,99 @@ class Presenter {
   init() {
     
     //получить массив с днями из model
-    let days: number[] = this.model.monthGenerator(new Date);
     //передать массив с днями в view
     
 
     this.view.setClickHandler('day', (index: number)=> {
-      console.log(index)
+      
+      let days: number[] = this.model.monthGenerator();
+
+      this.view.render({days: days,
+        monthName: this.getMonthName(),
+        year: this.getYear()
+      }, index)
+
     })
 
-    this.view.setClickHandler('arrow', (i: number)=> {
-      console.log(i)
+    this.view.setClickHandler('arrow', (direction: string)=> {
+      if (direction == 'left' || direction == 'right') {
+        let days = this.shiftMonth(direction); 
+
+        if (direction == 'left') {
+          this.model.setCurrentData(-1)
+        } else if (direction == 'right') {
+          this.model.setCurrentData(1)
+        }
+
+        this.view.render({days: days,
+          monthName: this.getMonthName(),
+          year: this.getYear()
+        })
+      }
+      
     })
 
-    this.view.setClickHandler('button', (message: string)=> {
-      console.log(message)
+    this.view.setClickHandler('button', (i: number)=> {
+    
+      let days: number[] = this.model.monthGenerator();
+      this.view.render({days: days,
+        monthName: this.getMonthName(),
+        year: this.getYear()
+      })
     })
 
-    this.view.render({days: days});
+    this.view.setClickHandler('dateLabel', (value: string)=> {
+      console.log(value)
+    })
+
+    this.view.setClickHandler('dateLabelList', (value: string)=> {
+      let days: number[] = this.model.monthGenerator();
+      this.view.render({days: days,
+        monthName: this.getMonthName(),
+        year: this.getYear(),
+        
+      })
+    })
+
+    let days: number[] = this.model.monthGenerator(new Date);
+    
+    this.view.render({days: days,
+      monthName: this.getMonthName(),
+      year: this.getYear()
+    });
   }
 
-  shiftMonth(direction: 'left' | 'right' ) {
+  shiftMonth(direction: 'left' | 'right' ): number[] {
     let days: number[] = []
     if (direction == 'left') {
       days = this.model.monthGenerator(undefined, -1);
     } else {
       days = this.model.monthGenerator(undefined, 1);
     }
-    this.view.render({days: days});
 
+    return days
+    //this.view.render({days: days});
+
+  }
+
+  getMonthName(): string {
+    let result: string;
+    let monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
+      'Октябрь', 'Ноябрь', 'Декабрь'];
+
+    let currentDate = this.model.getCurrentMonth();
+    let month = currentDate.getMonth();
+
+    result = monthNames[month] + '';
+
+    return result;
+
+  }
+
+  getYear(): string {
+    let currentDate = this.model.getCurrentMonth();
+
+    return currentDate.getFullYear() + '';
   }
 }
 

@@ -1,10 +1,14 @@
 /// <reference path="../app.d.ts" />
 class Model {
+  currentMonth: Date;
   currentData: Date | dateRange;
   
   //selectType: DateSelector
   constructor(public selectType: DateSelector, public dayCount: number, startDate?: Date) {
     if (!startDate) startDate = new Date();
+    
+    this.currentMonth = startDate;
+
     if (selectType == 'selectDay') {
       this.currentData = startDate;
     } else {
@@ -15,12 +19,13 @@ class Model {
   monthGenerator(currentDate?: Date, shift :number = 0, firstDayOfWeek?: number): number[] { //tested
     
     if (!currentDate) {
-      if ( this.currentData instanceof Date) {
-        currentDate = this.currentData
+      // if ( this.currentData instanceof Date) {
+      //   currentDate = this.currentData
 
-      } else {
-        currentDate = this.currentData.startDate
-      }
+      // } else {
+      //   currentDate = this.currentData.startDate
+      // }
+      currentDate = this.currentMonth;
     }
     
     let result: number[] = [];
@@ -46,6 +51,22 @@ class Model {
       }
     }
     return result
+  }
+
+  setCurrentData(shiftMonth?: number) {
+    if ( this.currentData  instanceof Date) {
+      let currentMonth = this.currentMonth.getMonth();      
+      this.currentMonth.setMonth(currentMonth + shiftMonth);
+    }
+
+  }
+
+  getCurrentDate() {
+    return this.currentData;
+  }
+
+  getCurrentMonth() {
+    return this.currentMonth;
   }
 
 }

@@ -8,10 +8,10 @@
   line-height: 40px;
   box-sizing: border-box;
   cursor: pointer;
-  &_on {
+  &_select-day {
     background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
   }
-  &_off {
-    background: white;
+  &_select-range {
+    background: pink;
   }
 }
