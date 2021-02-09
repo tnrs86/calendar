@@ -16,21 +16,78 @@ type presenterState = {
 
 class Presenter {
   // state: presenterState
-  constructor(public model: Model, public view: View, public rootElement: HTMLElement) {
-    //установить слушатели
+  view: View
+  constructor(public model: Model, public rootElement: HTMLElement) {
 
-    //установить state
-    // this.state.days = model.monthGenerator(currentData);
-    this.view.stateSetter({
+    this.view = new View({
       days: model.monthGenerator(this.model.getCurrentMonth()),
       selectType: model.getSelectType(),
       dateLabelContent: {month: this.getMonthName(), year: this.getYear()}
+    })
+
+    this.view.setClickHandler('day', (index: number)=> {
+      
+      // let days: number[] = this.model.monthGenerator();
+      this.view.stateSetter({selectDay: index})
+      // this.view.render({days: days,
+      //   monthName: this.getMonthName(),
+      //   year: this.getYear()
+      // }, index)
+
+    })
+
+    this.view.setClickHandler('arrow', (direction: string)=> {
+      console.log('arrow')
+
+      // if (direction == 'left' || direction == 'right') {
+      //   let days = this.shiftMonth(direction); 
+
+      //   if (direction == 'left') {
+      //     this.model.setCurrentData(-1)
+      //   } else if (direction == 'right') {
+      //     this.model.setCurrentData(1)
+      //   }
+
+      //   // this.view.render({days: days,
+      //   //   monthName: this.getMonthName(),
+      //   //   year: this.getYear()
+      //   // })
+      // }
+      
+    })
+
+    this.view.setClickHandler('button', (i: number)=> {
+      console.log('button')
+    
+      let days: number[] = this.model.monthGenerator();
+      // this.view.render({days: days,
+      //   monthName: this.getMonthName(),
+      //   year: this.getYear()
+      // })
+    })
+
+    this.view.setClickHandler('dateLabel', (value: string)=> {
+      console.log(value)
+    })
+
+    this.view.setClickHandler('dateLabelList', (value: string)=> {
+      let days: number[] = this.model.monthGenerator();
+      // this.view.render({days: days,
+      //   monthName: this.getMonthName(),
+      //   year: this.getYear(),
+        
+      // })
     })
   }
 
   init() {
     //view render
-    ReactDOM.render(this.view.render(), this.rootElement)
+    ReactDOM.render(
+      <React.StrictMode>
+        {this.view.render()}
+      </React.StrictMode>
+      , this.rootElement)
+    
   }
 
   getMonthName(): string {

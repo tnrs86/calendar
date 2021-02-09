@@ -6,6 +6,12 @@ import ArrowButton from "./arrowButton/arrowButton";
 import TextButton from "./textButton/textButton";
 import Calendar__dateLabel from "./calendar__date-label/calendar__date-label";
 
+type viewProps = {
+  days: number[],
+  selectType: DateSelector
+  dateLabelContent: {month: string, year: string}
+}
+
 type viewState = {
   days?: number[],
   selectDay?: number,
@@ -16,17 +22,24 @@ type viewState = {
 }
 
 class View extends Component {
-  state: viewState
+  state: viewState;
   dayClickHandler: Function;
   arrowClickHandler: Function;
   buttonClickHandler: Function;
   dateLabelClickHandler: Function;
   dateLabelListClickhandler: Function;
   
-  constructor(props: {}) {
+  constructor(props: viewProps) {
     super(props);
+    
+    this.state = {
+      days: props.days,
+      selectType: props.selectType,
+      dateLabelContent: props.dateLabelContent,
+      monthListIsOpen: undefined
+    }
 
-
+    this.stateSetter = this.stateSetter.bind(this);
   }
 
   setClickHandler(target: 'day' | 'arrow' | 'button' | 'dateLabel' | 'dateLabelList', handler: Function) {
@@ -50,9 +63,8 @@ class View extends Component {
   }
 
   stateSetter(settings: viewState) {
-    this.render();
-    console.log('before setState')
-    this.setState(settings);
+    console.log(this)
+    this.setState({monthListIsOpen: false});
     console.log('after set state')
   }
 
@@ -62,7 +74,7 @@ class View extends Component {
 
   render() {
     //защита от пустого state
-    if (!this.state) return null
+    // if (!this.state) return null
    
     return (
       <div className='calendar'>
