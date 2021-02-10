@@ -51,13 +51,13 @@ export default class Calendar__plate extends Component<myProps> {
           <Calendar__weekDayS />
           <div className='calendar__days-wrapper'>
             
-            {this.props.days.map((day, i) => {
+            {/* {this.props.days.map((day, i) => {
               let selected: boolean = false;
               if (this.props.selectDay == i) selected = true
               
               return (
                 <Calendar__day
-                  selected={selected} 
+                  // selected={selected} 
                   selectType={this.props.selectType} 
                   key={i} day={day} 
                   position={i} 
@@ -68,7 +68,7 @@ export default class Calendar__plate extends Component<myProps> {
                     }                    
                   }/>
               )
-            })}
+            })} */}
           </div>
           {/* <Calendar__days  days={this.props.days} clickHandler={this.props.dayClickHandler}/> */}
         </div>

@@ -8,7 +8,7 @@ import Calendar__dateLabel from "./calendar__date-label/calendar__date-label";
 
 type viewProps = {
   days: number[],
-  selectType: DateSelector,
+  dayType: any,
   dateLabelContent: {month: string, year: string},
   thisSender: Function,
   handlerSetter: Function
@@ -16,8 +16,9 @@ type viewProps = {
 
 type viewState = {
   days?: number[],
+  dayType: any,
   selectDay?: number,
-  selectRange?: {start: number, end: number},
+  selectRange?: {start: number, end: number, range: number[]},
   monthListIsOpen?: boolean,
   selectType?: DateSelector,
   dateLabelContent? : {month: string, year: string}
@@ -36,9 +37,9 @@ export default class Views extends Component<viewProps> {
     
     this.state = {
       days: props.days,
-      selectType: props.selectType,
       dateLabelContent: props.dateLabelContent,
-      monthListIsOpen: undefined
+      monthListIsOpen: undefined,
+      dayType: this.props.dayType
     }
 
     this.stateSetter = this.stateSetter.bind(this);
@@ -103,13 +104,15 @@ export default class Views extends Component<viewProps> {
           <div className='calendar__days-wrapper'>
             
             {this.state.days.map((day, i) => {
-              let selected: boolean = false;
-              if (this.state.selectDay == i) selected = true
+              let selected: 'single' | 'startRange' | 'range' | 'endRange' = undefined;
+              if (this.state.dayType[i]) {
+                selected = this.state.dayType[i];
+              }
               
               return (
                 <Calendar__day
                   selected={selected} 
-                  selectType={this.state.selectType} 
+                  // selectType={this.state.selectType} 
                   key={i} day={day} 
                   position={i} 
                   clickHandler={

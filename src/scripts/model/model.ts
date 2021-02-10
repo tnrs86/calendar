@@ -1,17 +1,18 @@
 /// <reference path="../app.d.ts" />
 class Model {
   currentMonth: Date;
-  currentData: Date | dateRange;
-  
+  currentDate: Date;
+  currentRange: dateRange
+  // firstDisplayedDay
   constructor(public selectType: DateSelector, public dayCount: number, startDate?: Date) {
     if (!startDate) startDate = new Date();
     
     this.currentMonth = startDate;
 
     if (selectType == 'selectDay') {
-      this.currentData = startDate;
+      this.currentDate = startDate;
     } else {
-      this.currentData = {startDate: startDate} as dateRange
+      this.currentRange = {startDate: startDate} as dateRange
     }
   }
 
@@ -52,16 +53,21 @@ class Model {
     return result
   }
 
-  setCurrentData(shiftMonth?: number) {
-    if ( this.currentData  instanceof Date) {
-      let currentMonth = this.currentMonth.getMonth();      
-      this.currentMonth.setMonth(currentMonth + shiftMonth);
-    }
+  setCurrentMonth(shiftMonth?: number) {
+    let currentMonth = this.currentMonth.getMonth();      
+    this.currentMonth.setMonth(currentMonth + shiftMonth);
+  }
 
+  setCurrentData(dayPosition: number) {
+    if (this.selectType = 'selectDay') {
+      // this.currentDate = dayPosition
+    } else {
+
+    }
   }
 
   getCurrentDate() {
-    return this.currentData;
+    return this.currentDate;
   }
 
   getCurrentMonth() {

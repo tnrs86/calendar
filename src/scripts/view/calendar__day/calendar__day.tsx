@@ -6,8 +6,8 @@ type myProps = {
   day: number;
   position: number;
   clickHandler: Function;
-  selectType: DateSelector;
-  selected: boolean;
+  // selectType: DateSelector;
+  selected?: 'single' | 'startRange' | 'range' | 'endRange';
 }
 
 type myState = {
@@ -18,11 +18,21 @@ export default class Calendar__day extends Component<myProps> {
 
   render() {
     let className: string = 'calendar__day';
+    
     if (this.props.selected) {
-      if (this.props.selectType == 'selectDay') {
-        className += ' calendar__day_select-day';
-      } else {
-        className += ' calendar__day_select-range';
+      switch (this.props.selected) {
+        case 'range':
+          className += ' calendar__day_select-range'
+          break
+        case 'single':
+          className += ' calendar__day_select-day'
+          break
+        case 'startRange':
+          className += ' calendar__day_start-range'
+          break;
+        case 'endRange':
+          className += ' calendar__day_end-range'
+          break
       }
     }
 

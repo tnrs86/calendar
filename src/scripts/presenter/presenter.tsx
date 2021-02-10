@@ -5,16 +5,6 @@ import ReactDOM from 'react-dom';
 import Calendar__plate from '../view/calendar__plate/Calendar__plate';
 import Views from '../view/view';
 
-type presenterProps = {
-  selectType: 'day' | 'range'
-}
-
-type presenterState = {
-  days: number[],
-  selectDay?: number,
-  selectRange?: {start: number, end: number},
-  monthListIsOpen?: boolean
-}
 
 class Presenter {
   // state: presenterState
@@ -30,10 +20,11 @@ class Presenter {
       <React.StrictMode>
 
         <Views days={this.model.monthGenerator()}
-        selectType={this.model.getSelectType()}
+        // selectType={this.model.getSelectType()}
         dateLabelContent={{month: this.getMonthName(), year: this.getYear()}}
         thisSender={this.viewGetter.bind(this)}
         handlerSetter={this.viewHandlerSetter.bind(this)}
+        dayType={{3: 'startRange', 4: 'range', 5: 'endRange'}}
         />
       
         </React.StrictMode>
@@ -57,9 +48,9 @@ class Presenter {
 
   viewHandlerSetter() {
     this.view.setClickHandler('day', (index: number)=> {
-      
-      // let days: number[] = this.model.monthGenerator();
-      this.view.stateSetter({selectDay: index})
+      //в зависимости от отпа календаря те или иные действия
+
+      // this.view.stateSetter({selectDay: index})
       // this.view.render({days: days,
       //   monthName: this.getMonthName(),
       //   year: this.getYear()
