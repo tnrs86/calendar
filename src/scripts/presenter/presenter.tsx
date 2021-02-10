@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Model from '../model/model';
 import View from '../view/view';
 import ReactDOM from 'react-dom';
+import Calendar__plate from '../view/calendar__plate/Calendar__plate';
+import Views from '../view/view';
 
 type presenterProps = {
   selectType: 'day' | 'range'
@@ -19,12 +21,41 @@ class Presenter {
   view: View
   constructor(public model: Model, public rootElement: HTMLElement) {
 
-    this.view = new View({
-      days: model.monthGenerator(this.model.getCurrentMonth()),
-      selectType: model.getSelectType(),
-      dateLabelContent: {month: this.getMonthName(), year: this.getYear()}
-    })
 
+  }
+
+  init() {
+    //view render
+    ReactDOM.render(
+      <React.StrictMode>
+
+        <Views days={this.model.monthGenerator()}
+        selectType={this.model.getSelectType()}
+        dateLabelContent={{month: this.getMonthName(), year: this.getYear()}}
+        thisSender={this.viewGetter.bind(this)}
+        handlerSetter={this.viewHandlerSetter.bind(this)}
+        />
+      
+        </React.StrictMode>
+      , this.rootElement)
+    
+  }
+
+  getMonthName(): string {
+    let result: string;
+    let monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
+      'Октябрь', 'Ноябрь', 'Декабрь'];
+
+    let currentDate = this.model.getCurrentMonth();
+    let month = currentDate.getMonth();
+
+    result = monthNames[month] + '';
+
+    return result;
+
+  }
+
+  viewHandlerSetter() {
     this.view.setClickHandler('day', (index: number)=> {
       
       // let days: number[] = this.model.monthGenerator();
@@ -80,28 +111,8 @@ class Presenter {
     })
   }
 
-  init() {
-    //view render
-    ReactDOM.render(
-      <React.StrictMode>
-        {this.view.render()}
-      </React.StrictMode>
-      , this.rootElement)
-    
-  }
-
-  getMonthName(): string {
-    let result: string;
-    let monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
-      'Октябрь', 'Ноябрь', 'Декабрь'];
-
-    let currentDate = this.model.getCurrentMonth();
-    let month = currentDate.getMonth();
-
-    result = monthNames[month] + '';
-
-    return result;
-
+  viewGetter(view: View) {
+    this.view = view
   }
 
   getYear(): string {

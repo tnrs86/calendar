@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./calendar.scss";
-import Calendar__day from "./calendar__days/calendar__day";
+import Calendar__day from "./calendar__day/calendar__day";
 import Calendar__weekDayS from "./calendar__week-day/calendar__week-day";
 import ArrowButton from "./arrowButton/arrowButton";
 import TextButton from "./textButton/textButton";
@@ -8,8 +8,10 @@ import Calendar__dateLabel from "./calendar__date-label/calendar__date-label";
 
 type viewProps = {
   days: number[],
-  selectType: DateSelector
-  dateLabelContent: {month: string, year: string}
+  selectType: DateSelector,
+  dateLabelContent: {month: string, year: string},
+  thisSender: Function,
+  handlerSetter: Function
 }
 
 type viewState = {
@@ -21,7 +23,7 @@ type viewState = {
   dateLabelContent? : {month: string, year: string}
 }
 
-class View extends Component {
+export default class Views extends Component<viewProps> {
   state: viewState;
   dayClickHandler: Function;
   arrowClickHandler: Function;
@@ -40,6 +42,8 @@ class View extends Component {
     }
 
     this.stateSetter = this.stateSetter.bind(this);
+    props.thisSender(this);
+    props.handlerSetter();
   }
 
   setClickHandler(target: 'day' | 'arrow' | 'button' | 'dateLabel' | 'dateLabelList', handler: Function) {
@@ -63,9 +67,9 @@ class View extends Component {
   }
 
   stateSetter(settings: viewState) {
-    console.log(this)
-    this.setState({monthListIsOpen: false});
-    console.log('after set state')
+    
+    this.setState(settings);
+    
   }
 
   setStartSettings() {
@@ -130,4 +134,3 @@ class View extends Component {
     )
   }
 }
-export default View;
