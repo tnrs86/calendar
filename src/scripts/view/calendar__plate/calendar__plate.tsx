@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./calendar__plate.scss";
-import Calendar__day from "../calendar__days/calendar__day";
+import Calendar__day from "../calendar__day/calendar__day";
 import Calendar__weekDayS from "../calendar__week-day/calendar__week-day";
 import ArrowButton from "../arrowButton/arrowButton";
 import TextButton from "../textButton/textButton";
