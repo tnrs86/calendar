@@ -7,7 +7,7 @@ type myProps = {
   position: number;
   clickHandler: Function;
   // selectType: DateSelector;
-  selected?: 'single' | 'startRange' | 'range' | 'endRange';
+  selected?: dayType;
 }
 
 type myState = {
@@ -21,11 +21,15 @@ export default class Calendar__day extends Component<myProps> {
     
     if (this.props.selected) {
       switch (this.props.selected) {
+
         case 'range':
           className += ' calendar__day_select-range'
           break
-        case 'single':
-          className += ' calendar__day_select-day'
+        case 'currentDay':
+          className += ' calendar__day_current-day';
+          break;
+        case 'selectDay':
+          className += ' calendar__day_select-day';
           break
         case 'startRange':
           className += ' calendar__day_start-range'

@@ -8,6 +8,9 @@
   line-height: 40px;
   box-sizing: border-box;
   cursor: pointer;
+  &_current-day {
+    background: blue;
+  }
   &_select-day {
     background: linear-gradient(180deg, #6FCF97 0%, #66D2EA 100%);
   }

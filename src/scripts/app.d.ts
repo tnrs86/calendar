@@ -5,3 +5,5 @@ type dateRange = {
   endDate: Date
 }
 
+type dayType = 'currentDay' | 'selectDay' | 'startRange' | 'range' | 'endRange'
+

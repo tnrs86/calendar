@@ -8,7 +8,7 @@ import Calendar__dateLabel from "./calendar__date-label/calendar__date-label";
 
 type viewProps = {
   days: number[],
-  dayType: any,
+  dayType: {[key: number]: dayType},
   dateLabelContent: {month: string, year: string},
   thisSender: Function,
   handlerSetter: Function
@@ -16,7 +16,7 @@ type viewProps = {
 
 type viewState = {
   days?: number[],
-  dayType: any,
+  dayType: {[key: string]: dayType},
   selectDay?: number,
   selectRange?: {start: number, end: number, range: number[]},
   monthListIsOpen?: boolean,
@@ -41,6 +41,8 @@ export default class Views extends Component<viewProps> {
       monthListIsOpen: undefined,
       dayType: this.props.dayType
     }
+
+    console.log(this.props.dayType)
 
     this.stateSetter = this.stateSetter.bind(this);
     props.thisSender(this);
@@ -68,7 +70,6 @@ export default class Views extends Component<viewProps> {
   }
 
   stateSetter(settings: viewState) {
-    
     this.setState(settings);
     
   }
@@ -104,7 +105,7 @@ export default class Views extends Component<viewProps> {
           <div className='calendar__days-wrapper'>
             
             {this.state.days.map((day, i) => {
-              let selected: 'single' | 'startRange' | 'range' | 'endRange' = undefined;
+              let selected: dayType = undefined;
               if (this.state.dayType[i]) {
                 selected = this.state.dayType[i];
               }
